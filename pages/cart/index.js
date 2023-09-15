@@ -26,6 +26,7 @@ const Cart = () => {
     return product.quantity * product.price;
   };
   const handleResetCart = () => {
+    alert("Order Placed Successfully");
     dispatch(resetCart());
   };
   
