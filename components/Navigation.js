@@ -1,11 +1,13 @@
+import { selectTotalQuantity } from "@/redux/cartSlice";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 const Navigation = () => {
-  const cart = useSelector((state) => state.cart);
   const [scrolled , setScrolled] = useState(false);
+  const totalQuantity = useSelector(selectTotalQuantity);
+
   const handlescroll = () => {
     const offset = window.scrollY;
     if (offset > 200) {
@@ -35,7 +37,7 @@ const Navigation = () => {
         <li className="ml-6">
           <Link href="/cart">
             <div className="flex items-center bg-[#F59E0D] px-2 py-2 rounded-lg">
-              <span className="font-semibold">{cart.length}</span>
+              <span className="font-semibold">{totalQuantity}</span>
               <AiOutlineShoppingCart size={20} className=" ml-2" />
             </div>
           </Link>

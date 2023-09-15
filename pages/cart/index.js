@@ -18,18 +18,20 @@ const Cart = () => {
     dispatch(deleteItem(id));
   };
   const getTotal = () => {
-    // Calculate the total based on product quantities and prices.
     return products.reduce((total, product) => {
       return total + product.quantity * product.price;
     }, 0);
   };
-
+  const calculateProductTotal = (product) => {
+    return product.quantity * product.price;
+  };
   return products.length ? (
     <div className="container mx-auto lg:w-1/2 w-full pb-24">
       <h1 className="my-12 font-bold">Cart Products</h1>
       <hr />
       <ul>
         {products.map((product) => {
+          const productTotal = calculateProductTotal(product); 
           return (
             <li className="mb-12">
               <div className="flex items-center justify-between">
@@ -52,7 +54,7 @@ const Cart = () => {
                     +
                   </button>
                 </div>
-                <span>{getTotal()}</span>
+                <span>{productTotal}</span>
                 <button
                   onClick={() => handleDelete(product.id)}
                   className="bg-red-500 px-4 py-2 rounded-full leading-none text-white"
