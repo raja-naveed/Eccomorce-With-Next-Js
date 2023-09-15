@@ -9,7 +9,7 @@ const cartSlice = createSlice({
     add(state, action) {
       const productToAdd = action.payload;
       const existingProduct = state.find((item) => item.id === productToAdd.id);
-    
+
       if (existingProduct) {
         // Product with the same ID exists in the cart, increment its quantity
         existingProduct.quantity += 1;
@@ -18,7 +18,7 @@ const cartSlice = createSlice({
         state.push(productToAdd);
       }
     },
-    
+
     remove(state, action) {
       return state.filter((item) => item.id !== action.payload);
     },
@@ -35,14 +35,17 @@ const cartSlice = createSlice({
       }
     },
     deleteItem(state, action) {
-        return state.filter((item) => item.id !== action.payload);
-      },
+      return state.filter((item) => item.id !== action.payload);
+    },
+    resetCart(state, action) {
+      return initialState;
+    },
   },
 });
 
-export const { add, remove, increment, decrement,deleteItem } = cartSlice.actions;
+export const { add, remove, increment, decrement, deleteItem ,resetCart} =
+  cartSlice.actions;
 export default cartSlice.reducer;
 export const selectTotalQuantity = (state) => {
   return state.cart.reduce((total, product) => total + product.quantity, 0);
 };
-

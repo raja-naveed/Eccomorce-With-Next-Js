@@ -1,4 +1,4 @@
-import { decrement, deleteItem, increment } from "@/redux/cartSlice";
+import { decrement, deleteItem, increment, resetCart } from "@/redux/cartSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,6 +25,10 @@ const Cart = () => {
   const calculateProductTotal = (product) => {
     return product.quantity * product.price;
   };
+  const handleResetCart = () => {
+    dispatch(resetCart());
+  };
+  
   return products.length ? (
     <div className="container mx-auto lg:w-1/2 w-full pb-24">
       <h1 className="my-12 font-bold">Cart Products</h1>
@@ -71,7 +75,9 @@ const Cart = () => {
         <span className="font-bold">Total: Rs{getTotal()} </span>
       </div>
       <div className="flex justify-end">
-        <button className="bg-yellow-500 text-white rounded-full px-4 py-2 mt-4">
+        <button 
+        onClick={handleResetCart}
+        className="bg-yellow-500 text-white rounded-full px-4 py-2 mt-4">
           Order Now
         </button>
       </div>
