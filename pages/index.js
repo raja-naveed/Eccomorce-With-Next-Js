@@ -1,5 +1,6 @@
 "use client";
 
+import GetVisitor from "@/components/GetVisitor";
 import Products from "@/components/Products";
 import axios from "axios";
 import { useEffect, useState } from "react";
