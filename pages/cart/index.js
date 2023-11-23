@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
   const products = useSelector((state) => state.cart);
-  console.log(products);
+  // console.log(products);
   const dispatch = useDispatch();
   const incrementQty = (id) => {
     dispatch(increment(id));

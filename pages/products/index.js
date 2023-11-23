@@ -10,7 +10,6 @@ const index = () => {
       try {
         const response = await axios.get("/data/data.json");
         const data = response.data;
-        // console.log(data);
         setProducts(data);
       } catch (error) {
         console.error("There was a problem with the Axios request:", error);

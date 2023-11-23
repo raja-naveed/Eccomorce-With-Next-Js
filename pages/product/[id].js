@@ -4,18 +4,41 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 import { add } from "@/redux/cartSlice";
+import CryptoJS from 'crypto-js';
 
 const Product = () => {
   const [product, setProduct] = useState(null);
-  const router = useRouter();
-  const productId = router.query.id;
   const [isAdding, setIsAdding] = useState(false);
-  const cart =useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+  const router = useRouter();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const encryptedProductId = router.query.id;
+      if (encryptedProductId) {
+        try {
+          const decryptedBytes = CryptoJS.AES.decrypt(encryptedProductId, 'secret_key');
+          const decryptedProductId = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          
+          const response = await axios.get("/data/data.json");
+          const data = response.data;
+  
+          // Find the product with the specified ID
+          const foundProduct = data.find(item => item.id.toString() === decryptedProductId);
+  
+          setProduct(foundProduct);
+        } catch (error) {
+          console.error("There was a problem with the Axios request:", error);
+        }
+      }
+    };
 
+    fetchData();
+  }, [router.query.id]); // Trigger the effect when router.query.id changes
 
-  const addToCartt = (e)=> {
+  const addToCartt = (e) => {
     e.preventDefault();
     dispatch(add(product));
     enqueueSnackbar(`Item added to your cart successfully`, {
@@ -25,38 +48,9 @@ const Product = () => {
 
     setIsAdding(true);
     setTimeout(() => {
-
       setIsAdding(false);
-
     }, 1000);
   }
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/data.json");
-        const data = response.data;
-        console.log(data); // Check the data in the console
-        console.log(productId); // Check the productId in the console
-
-        // Find the product with the specified id
-        const foundProduct = data.find(
-          (item) => item.id.toString() === productId
-        );
-        // console.log("Data IDs:", data.map((item) => item.id));
-
-        // Set the found product to the state
-        setProduct(foundProduct);
-      } catch (error) {
-        console.error("There was a problem with the Axios request:", error);
-      }
-    };
-
-    fetchData();
-  }, [productId]);
-  console.log(product);
-
   return (
     <div className="container mx-auto mt-12">
       <button className="mb-12 font-bold">Go Back</button>

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { add } from "@/redux/cartSlice";
 import { useSnackbar } from "notistack";
+import CryptoJS from 'crypto-js';
+
 
 
 const SingleProduct = ({product}) => {
@@ -29,8 +31,14 @@ const SingleProduct = ({product}) => {
   
       }, 1000);
     }
+   
+    const encrypted = CryptoJS.AES.encrypt(id.toString(), 'secret_key').toString();
+    const encoded = encodeURIComponent(encrypted);
+    
+const encryptedProductId = encoded;
   return (
-    <Link href={`/product/${id}`}>
+
+    <Link href={`/product/${encryptedProductId}`}>
       <div>
         <div className="h-[180px]">
       <img
