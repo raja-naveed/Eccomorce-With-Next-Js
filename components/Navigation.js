@@ -22,11 +22,11 @@ const Navigation = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const data = sessionStorage.getItem('visitor_data');
-      if (data) {
+      const data =   JSON.parse(sessionStorage.getItem("visitor_data"));
+            if (data) {
         try {
-          const parsedData = JSON.parse(data);
-          setVisitorData(parsedData.address);
+          
+          setVisitorData(data);
         } catch (error) {
           console.error('Error parsing JSON:', error);
           // Handle the case where JSON parsing fails
@@ -57,7 +57,7 @@ const Navigation = () => {
           <Link href="/products">Products</Link>
         </li>
         <li className="ml-6">
-          <p>{visitorData ? visitorData.city : 'Loading...'}</p>
+          <p>{visitorData ? visitorData.address.city : 'Loading...'}</p>
           <Link href="/cart">
             <div className="flex items-center bg-[#F59E0D] px-2 py-2 rounded-lg">
               <span className="font-semibold">{totalQuantity}</span>

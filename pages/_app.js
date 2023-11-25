@@ -9,13 +9,11 @@ export default function App({ Component, pageProps }) {
   return (
     <div>
       <Provider store={store}>
-      <SnackbarProvider maxSnack={3}>
-
-      <GetVisitor />
-      <Navigation />
-
-      <Component {...pageProps} />
-      </SnackbarProvider>
+        <SnackbarProvider maxSnack={3}>
+          <GetVisitor />
+          <Navigation />
+          <Component {...pageProps} />
+        </SnackbarProvider>
       </Provider>
     </div>
   );

@@ -1,11 +1,12 @@
 // store/index.js
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from '@/redux/cartSlice'; // Update the path to your cartSlice.js
+import cartReducer from '@/redux/cartSlice'; 
+import visitorSlice from './dataSlice';
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
-    // Add more reducers if needed
+    visitor: visitorSlice,
   },
 });
 
